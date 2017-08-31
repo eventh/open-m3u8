@@ -15,6 +15,7 @@ public class MediaData {
     private final boolean mForced;
     private final String mInStreamId;
     private final List<String> mCharacteristics;
+    private final Integer mChannels;
 
     private MediaData(
             MediaType type,
@@ -27,7 +28,8 @@ public class MediaData {
             boolean isAutoSelect,
             boolean isForced,
             String inStreamId,
-            List<String> characteristics) {
+            List<String> characteristics,
+            Integer channels) {
         mType = type;
         mUri = uri;
         mGroupId = groupId;
@@ -39,6 +41,7 @@ public class MediaData {
         mForced = isForced;
         mInStreamId = inStreamId;
         mCharacteristics = DataUtil.emptyOrUnmodifiable(characteristics);
+        mChannels = channels;
     }
 
     public MediaType getType() {
@@ -105,6 +108,14 @@ public class MediaData {
         return mCharacteristics;
     }
 
+    public boolean hasChannels() {
+        return mChannels != null;
+    }
+
+    public Integer getChannels() {
+        return mChannels;
+    }
+
     public Builder buildUpon() {
         return new Builder(
                 mType,
@@ -117,7 +128,8 @@ public class MediaData {
                 mAutoSelect,
                 mForced,
                 mInStreamId,
-                mCharacteristics);
+                mCharacteristics,
+                mChannels);
     }
     
     @Override
@@ -154,7 +166,8 @@ public class MediaData {
                mAutoSelect == other.mAutoSelect &&
                mForced == other.mForced &&
                Objects.equals(mInStreamId, other.mInStreamId) &&
-               Objects.equals(mCharacteristics, other.mCharacteristics);
+               Objects.equals(mCharacteristics, other.mCharacteristics) &&
+               Objects.equals(mChannels, other.mChannels);
     }
 
     public static class Builder {
@@ -169,6 +182,7 @@ public class MediaData {
         private boolean mForced;
         private String mInStreamId;
         private List<String> mCharacteristics;
+        private Integer mChannels;
 
         public Builder() {
         }
@@ -184,7 +198,8 @@ public class MediaData {
                 boolean autoSelect,
                 boolean forced,
                 String inStreamId,
-                List<String> characteristics) {
+                List<String> characteristics,
+                Integer channels) {
             mType = type;
             mUri = uri;
             mGroupId = groupId;
@@ -196,6 +211,7 @@ public class MediaData {
             mForced = forced;
             mInStreamId = inStreamId;
             mCharacteristics = characteristics;
+            mChannels = channels;
         }
 
         public Builder withType(MediaType type) {
@@ -253,6 +269,11 @@ public class MediaData {
             return this;
         }
 
+        public Builder withChannels(int channels) {
+            mChannels = channels;
+            return this;
+        }
+
         public MediaData build() {
             return new MediaData(
                     mType,
@@ -265,7 +286,8 @@ public class MediaData {
                     mAutoSelect,
                     mForced,
                     mInStreamId,
-                    mCharacteristics);
+                    mCharacteristics,
+                    mChannels);
         }
     }
 
@@ -276,6 +298,7 @@ public class MediaData {
                 + ", mAssociatedLanguage=" + mAssociatedLanguage + ", mName="
                 + mName + ", mDefault=" + mDefault + ", mAutoSelect="
                 + mAutoSelect + ", mForced=" + mForced + ", mInStreamId="
-                + mInStreamId + ", mCharacteristics=" + mCharacteristics + "]";
+                + mInStreamId + ", mCharacteristics=" + mCharacteristics
+                + ", mChannels=" + mChannels + "]";
     }
 }
