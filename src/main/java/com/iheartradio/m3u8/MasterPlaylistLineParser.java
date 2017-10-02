@@ -174,6 +174,14 @@ class MasterPlaylistLineParser implements LineParser {
                     }
                 }
             });
+
+            HANDLERS.put(Constants.SUBFORMAT, new AttributeParser<MediaData.Builder>() {
+                @Override
+                public void parse(Attribute attribute, MediaData.Builder builder, ParseState state) throws ParseException {
+                    final String subformat = attribute.value;
+                }
+            });
+
         }
 
         @Override
